@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React, { useState } from 'react';
+import SearchBar from './SearchBar';
+import RecipeList from './RecipeList';
+import { searchRecipes } from './apiService';
+// import RecipeDetail from './RecipeDetail';
 
-function App() {
+
+const App = () => {
+  const [recipes, setRecipes] = useState([]);
+
+  const handleSearch = async (query) => {
+    const results = await searchRecipes(query);
+    setRecipes(results);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <SearchBar onSearch={handleSearch} />
+      <RecipeList recipes={recipes} />
     </div>
   );
-}
+};
 
 export default App;
